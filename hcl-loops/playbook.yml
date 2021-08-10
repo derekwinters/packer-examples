@@ -1,0 +1,28 @@
+---
+- name: Packer Image Builder
+  hosts: all
+  
+  roles:
+  # A public or private role that configures a monitoring agent
+  - role: example/mon-agent
+    tags:
+      - always
+      
+  # A public or private role that installs terraform
+  - role: example/terraform
+    tags:
+      - terraform
+    vars:
+      terraform_version = "1.0.0"
+      
+  - role: example/terraform
+    tags:
+      - terraform_beta
+    vars:
+      terraform_version = "1.1.0-alpha20210728"
+      
+  # A public or private role that installs a database
+  - role: geerlingguy.postgresql
+    tags:
+      - dbserver
+    become: true
